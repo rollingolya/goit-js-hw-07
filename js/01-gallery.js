@@ -1,7 +1,6 @@
 import { galleryItems } from './gallery-items.js';
 
 console.log(galleryItems);
-// Change code below this line
 
 const galerryContainer = document.querySelector('.gallery');
 const cardsMarkup = createGalleryItemsMarkup(galleryItems);
@@ -27,7 +26,15 @@ function createGalleryItemsMarkup(items) {
       .join("");
 }
 
-console.log(galleryItems);
+galleryContainer.addEventListener('click', onImageClick);
+
+function onImageClick(e) {
+  e.preventDefaul(); 
+  // забороняє відкривати лінк в новому вікні
+  if (e.target.nodeName !== 'IMG') {
+    return;
+  }
+}
 
 // create gallery items
 
