@@ -26,23 +26,28 @@ function createGalleryItemsMarkup(items) {
       .join("");
 }
 
-galleryContainer.addEventListener('click', onImageClick);
+galerryContainer.addEventListener('click', onGalleryModalClick);
 
-function onImageClick(e) {
-  e.preventDefaul(); 
+function onGalleryModalClick(evt) {
+  evt.preventDefault();
   // забороняє відкривати лінк в новому вікні
-  if (e.target.nodeName !== 'IMG') {
+  if (evt.target.nodeName !== 'IMG') {
     return;
   }
+
+  const instance = basicLightbox.create(`<img src="${evt.target.dataset.source}" width = "800" height = "600">`
+);
+
+  instance.show();
+
+  instance.element().querySelector('img').src = evt.target.dataset.source;
+  // атрибут src всім елементам img замінєє на source 
+};
+
+
+function onEsc(evt) {
+  if (evt.code === 'Escape') {
+    instance.close();
+  }
 }
-
-// create gallery items
-
-const instance = basicLightbox.create(`<img src="${e.target.dataset.source}>`,
-{
-  onShow: () => { document.addEventListener("keydown", onEsc) },
-  onClose: () => { document.removeEventListener("keydown", onEsc) }
-});
-
-instance.show()
  
